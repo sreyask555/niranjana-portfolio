@@ -1,0 +1,12 @@
+.iframe-container {
+    /* Add border radius to round the corners */
+    border-radius: 15px;
+    overflow: hidden; /* Hide anything outside the border radius */
+  }
+  
+
+  .testimonials-modal {
+    width: 100%; /* Increase this to a larger value to make the modal wider */
+    margin: 0 auto; /* Center the modal */
+  }
+  
