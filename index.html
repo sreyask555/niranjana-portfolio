@@ -1,1051 +1,1418 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Niranjana - Personal Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Niranjana Pradeep - Product Designer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS ─────────────────────────────────── */
+:root {
+  --bg:          #F9F7F4;
+  --bg-card:     #FFFFFF;
+  --bg-muted:    #F2EFE9;
+  --ink:         #111008;
+  --ink-2:       #3A3830;
+  --ink-3:       #7A7669;
+  --accent:      #C8602A;
+  --accent-2:    #E8956A;
+  --accent-pale: #FAF0E8;
+  --border:      rgba(0,0,0,0.08);
+  --shadow-sm:   0 2px 12px rgba(0,0,0,0.06);
+  --shadow-md:   0 8px 40px rgba(0,0,0,0.10);
+  --shadow-lg:   0 24px 64px rgba(0,0,0,0.12);
+  --radius:      16px;
+  --radius-sm:   10px;
+  --nav-h:       68px;
+  --serif:       'DM Serif Display', Georgia, serif;
+  --sans:        'DM Sans', system-ui, sans-serif;
+  --ease:        cubic-bezier(0.16, 1, 0.3, 1);
+  --t:           0.4s;
+}
+[data-theme="dark"] {
+  --bg:          #0F0E0B;
+  --bg-card:     #1A1915;
+  --bg-muted:    #242218;
+  --ink:         #F5F2EC;
+  --ink-2:       #C8C4B8;
+  --ink-3:       #7A7669;
+  --accent:      #E8956A;
+  --accent-2:    #C8602A;
+  --accent-pale: #1F180F;
+  --border:      rgba(255,255,255,0.08);
+  --shadow-sm:   0 2px 12px rgba(0,0,0,0.3);
+  --shadow-md:   0 8px 40px rgba(0,0,0,0.4);
+  --shadow-lg:   0 24px 64px rgba(0,0,0,0.5);
+}
 
-  <!--
-    - favicon
-  -->
-  <link rel="shortcut icon" href="./assets/images/niranjana-avatar.png" type="image/x-icon">
+/* ─── RESET & BASE ──────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  transition: background var(--t) var(--ease), color var(--t) var(--ease);
+  overflow-x: hidden;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font-family: var(--sans); cursor: pointer; border: none; background: none; }
+ul { list-style: none; }
 
-  <!--
-    - custom css link
-  -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <link rel="stylesheet" href="./assets/css/pdf.css">
+/* ─── SCROLLBAR ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--ink-3); border-radius: 99px; }
 
-  <!--
-    - google font link
-  -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+/* ─── TYPOGRAPHY ────────────────────────────────────── */
+.t-display { font-family: var(--serif); font-size: clamp(3rem, 7vw, 6rem); line-height: 1.05; letter-spacing: -0.02em; }
+.t-h1 { font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1.1; letter-spacing: -0.02em; }
+.t-h2 { font-family: var(--serif); font-size: clamp(1.6rem, 3.5vw, 2.4rem); line-height: 1.2; letter-spacing: -0.01em; }
+.t-h3 { font-size: 1.15rem; font-weight: 600; letter-spacing: -0.01em; }
+.t-body { font-size: 1rem; font-weight: 300; color: var(--ink-2); line-height: 1.75; }
+.t-small { font-size: 0.825rem; font-weight: 400; color: var(--ink-3); letter-spacing: 0.04em; }
+.t-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); }
+
+/* ─── LAYOUT ────────────────────────────────────────── */
+.container { max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 80px); }
+.section { padding: clamp(80px, 12vw, 140px) 0; }
+.section-header { margin-bottom: clamp(48px, 6vw, 72px); }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-8 { gap: 8px; }
+.gap-16 { gap: 16px; }
+.gap-24 { gap: 24px; }
+
+/* ─── NAVIGATION ────────────────────────────────────── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--nav-h);
+  display: flex; align-items: center;
+  border-bottom: 1px solid transparent;
+  transition: all var(--t) var(--ease);
+}
+nav.scrolled {
+  background: rgba(249,247,244,0.85);
+  backdrop-filter: blur(20px);
+  border-color: var(--border);
+}
+[data-theme="dark"] nav.scrolled { background: rgba(15,14,11,0.85); }
+.nav-inner { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,5vw,80px); display: flex; align-items: center; justify-content: space-between; }
+.nav-logo { font-family: var(--serif); font-size: 1.2rem; font-weight: 400; letter-spacing: -0.01em; }
+.nav-logo span { color: var(--accent); }
+.nav-links { display: flex; align-items: center; gap: 36px; }
+.nav-links a { font-size: 0.875rem; font-weight: 400; color: var(--ink-2); transition: color 0.2s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.theme-btn {
+  width: 38px; height: 38px; border-radius: 50%;
+  background: var(--bg-muted); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; transition: all 0.2s; cursor: pointer;
+}
+.theme-btn:hover { background: var(--bg-card); transform: scale(1.05); }
+.btn-nav { padding: 9px 20px; border-radius: 99px; background: var(--ink); color: var(--bg); font-size: 0.85rem; font-weight: 500; transition: all 0.25s var(--ease); }
+.btn-nav:hover { opacity: 0.85; transform: translateY(-1px); }
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+.hamburger span { width: 22px; height: 1.5px; background: var(--ink); transition: all 0.3s; border-radius: 2px; }
+
+/* ─── BUTTONS ───────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 28px; border-radius: 99px; font-size: 0.9rem; font-weight: 500;
+  transition: all 0.25s var(--ease); cursor: pointer;
+}
+.btn-primary { background: var(--ink); color: var(--bg); }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
+.btn-outline:hover { background: var(--bg-muted); transform: translateY(-2px); }
+.btn-accent { background: var(--accent); color: #fff; }
+.btn-accent:hover { background: var(--accent-2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,96,42,0.3); }
+
+/* ─── TAGS ──────────────────────────────────────────── */
+.tag {
+  display: inline-flex; align-items: center; padding: 4px 12px; border-radius: 99px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+  background: var(--bg-muted); color: var(--ink-3); border: 1px solid var(--border);
+  transition: all 0.2s;
+}
+.tag-accent { background: var(--accent-pale); color: var(--accent); border-color: rgba(200,96,42,0.15); }
+
+/* ─── HERO ──────────────────────────────────────────── */
+#hero {
+  min-height: 100vh; display: flex; align-items: center;
+  padding-top: var(--nav-h);
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-orb {
+  position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35;
+  animation: orbFloat 8s ease-in-out infinite;
+}
+.orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, #E8956A, #C8602A); top: -100px; right: -150px; animation-delay: 0s; }
+.orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, #C8E8D0, #8ABFA0); bottom: -50px; left: -100px; animation-delay: -4s; }
+[data-theme="dark"] .orb-1 { opacity: 0.15; }
+[data-theme="dark"] .orb-2 { opacity: 0.1; }
+@keyframes orbFloat { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,-30px) scale(1.05); } }
+
+.hero-content { position: relative; z-index: 1; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 14px; border-radius: 99px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  margin-bottom: 28px;
+  animation: fadeUp 0.8s var(--ease) 0.1s both;
+  box-shadow: var(--shadow-sm);
+}
+.hero-badge .dot { width: 7px; height: 7px; border-radius: 50%; background: #48B87E; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.85); } }
+
+.hero-title { animation: fadeUp 0.8s var(--ease) 0.2s both; margin-bottom: 24px; }
+.hero-title em { font-style: italic; color: var(--accent); }
+.hero-subtitle { animation: fadeUp 0.8s var(--ease) 0.3s both; max-width: 560px; margin-bottom: 40px; }
+.hero-cta { display: flex; gap: 14px; flex-wrap: wrap; animation: fadeUp 0.8s var(--ease) 0.4s both; }
+.hero-meta { margin-top: 80px; animation: fadeUp 0.8s var(--ease) 0.5s both; }
+.hero-meta-inner { display: flex; gap: 48px; flex-wrap: wrap; }
+.hero-stat strong { font-family: var(--serif); font-size: 2rem; display: block; line-height: 1; }
+.hero-stat span { font-size: 0.8rem; color: var(--ink-3); margin-top: 4px; display: block; }
+
+.hero-visual {
+  position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+  width: min(480px, 45vw); aspect-ratio: 1;
+  pointer-events: none;
+  animation: fadeIn 1.2s var(--ease) 0.3s both;
+}
+.hero-rings {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+}
+.ring {
+  position: absolute; border-radius: 50%; border: 1px solid var(--border);
+  animation: spinRing linear infinite;
+}
+.ring-1 { width: 200px; height: 200px; border-color: rgba(200,96,42,0.2); animation-duration: 20s; }
+.ring-2 { width: 300px; height: 300px; border-style: dashed; border-color: rgba(200,96,42,0.1); animation-duration: 30s; animation-direction: reverse; }
+.ring-3 { width: 420px; height: 420px; border-color: var(--border); animation-duration: 40s; }
+@keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+.hero-card-float {
+  position: absolute; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 14px 18px; box-shadow: var(--shadow-md);
+  white-space: nowrap;
+}
+.hcf-1 { top: 22%; left: 10%; animation: floatCard1 6s ease-in-out infinite; }
+.hcf-2 { bottom: 25%; right: 8%; animation: floatCard1 7s ease-in-out -3s infinite; }
+.hcf-3 { top: 58%; left: 15%; animation: floatCard1 5s ease-in-out -1.5s infinite; }
+@keyframes floatCard1 { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+.hcf-icon { font-size: 1.2rem; margin-bottom: 2px; }
+.hcf-label { font-size: 0.75rem; font-weight: 600; color: var(--ink); }
+.hcf-sub { font-size: 0.68rem; color: var(--ink-3); }
+
+/* ─── MARQUEE ────────────────────────────────────────── */
+.marquee-section { padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); overflow: hidden; background: var(--bg-muted); }
+.marquee-track { display: flex; gap: 0; animation: marquee 25s linear infinite; width: max-content; }
+.marquee-item { display: flex; align-items: center; gap: 16px; padding: 0 40px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+.marquee-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
+@keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+/* ─── CASE STUDIES ──────────────────────────────────── */
+.cs-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.cs-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: calc(var(--radius) * 1.5); overflow: hidden;
+  transition: all 0.45s var(--ease); cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+.cs-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(200,96,42,0.15); }
+.cs-card.large { grid-column: span 2; }
+.cs-thumb {
+  position: relative; overflow: hidden;
+  background: var(--bg-muted);
+}
+.cs-card.large .cs-thumb { height: 360px; }
+.cs-card:not(.large) .cs-thumb { height: 240px; }
+.cs-thumb-inner {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+  transition: transform 0.6s var(--ease);
+}
+.cs-card:hover .cs-thumb-inner { transform: scale(1.08); }
+.thumb-pulse { background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%); }
+.thumb-good { background: linear-gradient(135deg, #0A4A2E 0%, #1A6B45 50%, #0D3D24 100%); }
+.thumb-innovin { background: linear-gradient(135deg, #2A1A0A 0%, #C8602A 50%, #E8956A 100%); }
+.thumb-brand { background: linear-gradient(135deg, #1A0A2E 0%, #6B2FA0 50%, #9B59B6 100%); }
+.cs-thumb-badge {
+  position: absolute; top: 16px; right: 16px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
+  color: #fff; border-radius: 99px; padding: 5px 12px;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.cs-body { padding: 28px; }
+.cs-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.cs-title { font-family: var(--serif); font-size: 1.55rem; line-height: 1.2; margin-bottom: 10px; }
+.cs-desc { font-size: 0.9rem; color: var(--ink-2); font-weight: 300; line-height: 1.6; margin-bottom: 20px; }
+.cs-footer { display: flex; align-items: center; justify-content: space-between; }
+.cs-impact { font-size: 0.8rem; color: var(--ink-3); }
+.cs-impact strong { color: var(--accent); font-weight: 600; }
+.cs-arrow {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-muted); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.9rem; transition: all 0.3s var(--ease);
+}
+.cs-card:hover .cs-arrow { background: var(--ink); color: var(--bg); transform: rotate(-45deg); }
+
+/* ─── CASE STUDY MODAL ──────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding: 40px 20px; overflow-y: auto;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal {
+  background: var(--bg); border-radius: calc(var(--radius)*2); overflow: hidden;
+  width: 100%; max-width: 860px; box-shadow: var(--shadow-lg);
+  transform: translateY(30px); transition: transform 0.4s var(--ease);
+}
+.modal-overlay.open .modal { transform: translateY(0); }
+.modal-hero { height: 320px; display: flex; align-items: center; justify-content: center; font-size: 6rem; position: relative; }
+.modal-close {
+  position: absolute; top: 20px; right: 20px;
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(0,0,0,0.4); color: #fff; backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center; font-size: 1.1rem; cursor: pointer;
+  transition: all 0.2s;
+}
+.modal-close:hover { background: rgba(0,0,0,0.7); transform: scale(1.1); }
+.modal-body { padding: clamp(32px, 5vw, 56px); }
+.modal-section { margin-bottom: 48px; }
+.modal-section:last-child { margin-bottom: 0; }
+.modal-step-label {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.modal-step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent-pale); color: var(--accent);
+  font-size: 0.75rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+.modal-insight-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+.modal-insight-card {
+  background: var(--bg-muted); border-radius: var(--radius-sm); padding: 20px;
+  border: 1px solid var(--border);
+}
+.modal-insight-card h4 { font-size: 0.85rem; font-weight: 600; margin-bottom: 6px; }
+.modal-insight-card p { font-size: 0.82rem; color: var(--ink-2); line-height: 1.6; }
+.modal-outcome-stat { display: flex; gap: 32px; flex-wrap: wrap; margin-top: 20px; }
+.outcome-num { font-family: var(--serif); font-size: 2.4rem; color: var(--accent); }
+.outcome-label { font-size: 0.8rem; color: var(--ink-3); margin-top: 2px; }
+
+/* ─── ALL PROJECTS ──────────────────────────────────── */
+.filter-bar {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 40px;
+}
+.filter-btn {
+  padding: 8px 20px; border-radius: 99px; font-size: 0.82rem; font-weight: 500;
+  background: var(--bg-muted); color: var(--ink-2); border: 1px solid var(--border);
+  transition: all 0.2s; cursor: pointer;
+}
+.filter-btn.active, .filter-btn:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+.proj-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  overflow: hidden; cursor: pointer; transition: all 0.35s var(--ease);
+  box-shadow: var(--shadow-sm);
+}
+.proj-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.proj-thumb {
+  height: 180px; display: flex; align-items: center; justify-content: center;
+  font-size: 3rem; position: relative; overflow: hidden;
+}
+.proj-info { padding: 18px; }
+.proj-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; }
+.proj-sub { font-size: 0.8rem; color: var(--ink-3); }
+.proj-tag { margin-top: 12px; }
+.proj-card.hidden { display: none !important; }
+
+/* ─── PHILOSOPHY ────────────────────────────────────── */
+#philosophy { background: var(--ink); color: var(--bg); }
+[data-theme="dark"] #philosophy { background: var(--bg-muted); color: var(--ink); }
+.phil-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+.phil-left { position: sticky; top: calc(var(--nav-h) + 40px); }
+.phil-tagline { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.15; letter-spacing: -0.02em; }
+.phil-tagline em { font-style: italic; opacity: 0.6; }
+.phil-items { display: flex; flex-direction: column; gap: 2px; }
+.phil-item {
+  padding: 24px; border-radius: var(--radius);
+  transition: background 0.3s;
+}
+.phil-item:hover { background: rgba(255,255,255,0.05); }
+[data-theme="dark"] .phil-item:hover { background: rgba(255,255,255,0.04); }
+.phil-item-num { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; opacity: 0.4; margin-bottom: 10px; text-transform: uppercase; }
+.phil-item h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 8px; }
+.phil-item p { font-size: 0.88rem; opacity: 0.6; line-height: 1.7; }
+
+/* ─── ABOUT ─────────────────────────────────────────── */
+.about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+.about-portrait {
+  position: sticky; top: calc(var(--nav-h) + 40px);
+}
+.portrait-frame {
+  width: 100%; aspect-ratio: 3/4; border-radius: calc(var(--radius)*2); overflow: hidden;
+  background: linear-gradient(160deg, var(--accent-pale) 0%, var(--bg-muted) 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8rem; border: 1px solid var(--border);
+  position: relative;
+}
+.portrait-frame::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(to bottom, transparent 60%, rgba(200,96,42,0.1));
+}
+.portrait-label {
+  margin-top: 16px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 16px;
+  display: flex; gap: 12px; align-items: center;
+}
+.portrait-label-icon { font-size: 1.5rem; }
+.portrait-label-text strong { font-size: 0.9rem; display: block; }
+.portrait-label-text span { font-size: 0.8rem; color: var(--ink-3); }
+.portrait-label-text span strong { display: inline; }
+.about-content > * + * { margin-top: 24px; }
+.about-highlight {
+  padding: 20px 24px; border-left: 3px solid var(--accent);
+  background: var(--accent-pale); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-style: italic; color: var(--ink-2); font-size: 1.05rem; font-weight: 300; line-height: 1.65;
+}
+
+/* ─── SKILLS ────────────────────────────────────────── */
+.skills-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.skill-group {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px; transition: all 0.3s var(--ease);
+}
+.skill-group:hover { border-color: rgba(200,96,42,0.25); box-shadow: var(--shadow-sm); }
+.skill-group-icon { font-size: 1.8rem; margin-bottom: 14px; }
+.skill-group h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 16px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.06em; }
+.skill-list { display: flex; flex-direction: column; gap: 10px; }
+.skill-item { display: flex; justify-content: space-between; align-items: center; font-size: 0.85rem; }
+.skill-bar { flex: 1; height: 3px; background: var(--bg-muted); border-radius: 99px; margin: 0 12px; overflow: hidden; }
+.skill-fill { height: 100%; background: var(--accent); border-radius: 99px; width: 0; transition: width 1.2s var(--ease); }
+.skill-pct { font-size: 0.75rem; color: var(--ink-3); font-weight: 600; }
+.tools-section { margin-top: 48px; }
+.tools-grid { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.tool-pill {
+  padding: 8px 16px; border-radius: 99px; font-size: 0.82rem; font-weight: 500;
+  background: var(--bg-card); border: 1px solid var(--border);
+  transition: all 0.2s; display: flex; align-items: center; gap: 6px;
+}
+.tool-pill:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+
+/* ─── BLOG ──────────────────────────────────────────── */
+.blog-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+.blog-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 28px; transition: all 0.35s var(--ease); cursor: pointer;
+}
+.blog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: rgba(200,96,42,0.15); }
+.blog-emoji { font-size: 2rem; margin-bottom: 16px; }
+.blog-date { font-size: 0.75rem; color: var(--ink-3); margin-bottom: 10px; }
+.blog-title { font-weight: 600; font-size: 1rem; line-height: 1.4; margin-bottom: 10px; }
+.blog-excerpt { font-size: 0.85rem; color: var(--ink-2); line-height: 1.6; }
+.blog-readmore { margin-top: 16px; font-size: 0.8rem; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+/* ─── CONTACT ───────────────────────────────────────── */
+#contact { background: var(--ink); color: var(--bg); text-align: center; position: relative; overflow: hidden; }
+[data-theme="dark"] #contact { background: var(--bg-muted); color: var(--ink); }
+.contact-orb { position: absolute; width: 400px; height: 400px; border-radius: 50%; background: radial-gradient(circle, rgba(200,96,42,0.3), transparent); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; }
+.contact-inner { position: relative; z-index: 1; }
+.contact-title { font-family: var(--serif); font-size: clamp(2.4rem, 6vw, 5rem); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 20px; }
+.contact-subtitle { font-size: 1rem; opacity: 0.6; max-width: 480px; margin: 0 auto 48px; line-height: 1.7; }
+.contact-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-bottom: 64px; }
+.contact-links { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.contact-link { display: flex; align-items: center; gap: 8px; font-size: 0.875rem; opacity: 0.5; transition: opacity 0.2s; }
+.contact-link:hover { opacity: 1; }
+
+/* ─── FOOTER ────────────────────────────────────────── */
+footer {
+  padding: 28px 0; border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-inner { width: 100%; max-width: 1200px; margin: 0 auto; padding: 0 clamp(20px,5vw,80px); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+footer .t-small { font-size: 0.8rem; }
+
+/* ─── DIVIDER ───────────────────────────────────────── */
+.divider { width: 48px; height: 3px; background: var(--accent); border-radius: 99px; margin: 16px 0 28px; }
+
+/* ─── ANIMATIONS ────────────────────────────────────── */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s var(--ease), transform 0.7s var(--ease); }
+.reveal.visible { opacity: 1; transform: none; }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ─── MOBILE NAV ────────────────────────────────────── */
+.mobile-nav {
+  position: fixed; inset: 0; z-index: 150;
+  background: var(--bg); display: flex; flex-direction: column;
+  padding: 100px 40px 40px;
+  transform: translateX(100%); transition: transform 0.4s var(--ease);
+}
+.mobile-nav.open { transform: none; }
+.mobile-nav a { font-family: var(--serif); font-size: 2.4rem; color: var(--ink); padding: 12px 0; border-bottom: 1px solid var(--border); display: block; }
+
+/* ─── PROGRESS BAR ──────────────────────────────────── */
+.progress-bar {
+  position: fixed; top: 0; left: 0; z-index: 101;
+  height: 3px; background: var(--accent); width: 0;
+  transition: width 0.1s linear;
+}
+
+/* ─── CURSOR ────────────────────────────────────────── */
+.cursor {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--accent);
+  position: fixed; pointer-events: none; z-index: 9999;
+  transform: translate(-50%,-50%); transition: transform 0.1s, width 0.3s var(--ease), height 0.3s var(--ease), opacity 0.3s;
+}
+.cursor-follow {
+  width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--accent);
+  position: fixed; pointer-events: none; z-index: 9998;
+  transform: translate(-50%,-50%);
+  transition: left 0.15s var(--ease), top 0.15s var(--ease), width 0.4s var(--ease), height 0.4s var(--ease);
+  opacity: 0.4;
+}
+@media (hover: none) { .cursor, .cursor-follow { display: none; } }
+
+/* ─── RESPONSIVE ────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hero-visual { display: none; }
+  .grid-3 { grid-template-columns: 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr; }
+  .about-grid { grid-template-columns: 1fr; gap: 48px; }
+  .about-portrait { position: relative; top: 0; }
+  .portrait-frame { aspect-ratio: 16/9; font-size: 5rem; }
+  .portrait-frame img { transform: scale(0.85); transform-origin: center bottom; object-position: center 10%; }
+  .phil-grid { grid-template-columns: 1fr; gap: 40px; }
+  .phil-left { position: relative; top: 0; }
+}
+@media (max-width: 768px) {
+  .nav-links, .btn-nav { display: none; }
+  .hamburger { display: flex; }
+  .cs-grid { grid-template-columns: 1fr; }
+  .cs-card.large { grid-column: span 1; }
+  .cs-card.large .cs-thumb { height: 240px; }
+  .skills-grid { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: 1fr; }
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .hero-meta-inner { gap: 28px; }
+  .modal-insight-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero-cta { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+  .contact-actions { flex-direction: column; align-items: center; }
+}
+</style>
 </head>
-
 <body>
 
-  <!--
-    - #MAIN
-  -->
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follow" id="cursorFollow"></div>
 
-  <main>
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar"></div>
 
-    <!--
-      - #SIDEBAR
-    -->
-
-    <aside class="sidebar" data-sidebar>
-
-      <div class="sidebar-info">
-
-        <figure class="avatar-box">
-          <img src="./assets/images/niranjana-avatar.png" alt="Niranjana Pradeep" width="80">
-        </figure>
-
-        <div class="info-content">
-          <h1 class="name" title="Niranjana Pradeep">Niranjana Pradeep</h1>
-
-          <p class="title">UI/UX Designer</p>
-        </div>
-
-        <button class="info_more-btn" data-sidebar-btn>
-          <span>Get In Touch</span>
-
-          <ion-icon name="chevron-down"></ion-icon>
-        </button>
-
+<!-- NAVIGATION -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#hero" class="nav-logo">Niranjana<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#philosophy">Philosophy</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#blog">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">🌙</button>
+      <a href="#contact" class="btn-nav">Let's Talk</a>
+      <div class="hamburger" id="hamburger">
+        <span></span><span></span><span></span>
       </div>
-
-      <div class="sidebar-info_more">
-
-        <div class="separator"></div>
-
-        <ul class="contacts-list">
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="mail-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Email</p>
-
-              <a href="mailto:pradeepniranjana02@gmail.com" class="contact-link">pradeepniranjana02@gmail.com</a>
-            </div>
-
-          </li>
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="phone-portrait-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Phone</p>
-
-              <a href="tel:+919207624797" class="contact-link">+91 9207624797</a>
-            </div>
-
-          </li>
-
-          <!-- <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="calendar-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Birthday</p>
-
-              <time datetime="1982-06-23">June 23, 1982</time>
-            </div>
-
-          </li> -->
-
-          <li class="contact-item">
-
-            <div class="icon-box">
-              <ion-icon name="location-outline"></ion-icon>
-            </div>
-
-            <div class="contact-info">
-              <p class="contact-title">Location</p>
-
-              <address>Kottayam, Kerala, IN</address>
-            </div>
-
-          </li>
-
-        </ul>
-
-        <div class="separator"></div>
-
-        <ul class="social-list">
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-facebook"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-twitter"></ion-icon>
-            </a>
-          </li>
-
-          <li class="social-item">
-            <a href="#" class="social-link">
-              <ion-icon name="logo-instagram"></ion-icon>
-            </a>
-          </li>
-
-        </ul>
-
-      </div>
-
-    </aside>
-
-
-
-
-
-    <!--
-      - #main-content
-    -->
-
-    <div class="main-content">
-
-      <!--
-        - #NAVBAR
-      -->
-
-      <nav class="navbar">
-
-        <ul class="navbar-list">
-
-          <li class="navbar-item">
-            <button class="navbar-link  active" data-nav-link>About</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Portfolio</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Resume</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Blog</button>
-          </li>
-
-          <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Contact</button>
-          </li>
-
-        </ul>
-
-      </nav>
-
-
-
-
-
-      <!--
-        - #ABOUT
-      -->
-
-      <article class="about  active" data-page="about">
-
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
-
-        <section class="about-text">
-          <p>
-            Hi, I’m Niranjana Pradeep, a passionate designer specializing in UI/UX, branding, graphic design, and digital art. My work blends creativity with functionality, crafting visually stunning and intuitive experiences that engage and inspire. 
-            With a keen eye for detail, I design solutions that are not only aesthetically compelling but also user-centric and impactful.
-          </p>
-
-          <p>
-            Every project is an opportunity to tell a powerful story through design, ensuring brands effectively communicate their identity.
-            I’ve had the privilege of working with clients across various industries, creating designs that enhance user experiences and drive business success. Let’s collaborate and bring your vision to life with creativity and precision!
-          </p>
-        </section>
-
-
-        <!--
-          - service
-        -->
-
-        <section class="service">
-
-          <h3 class="h3 service-title">What I Do</h3>
-        
-          <ul class="service-list">
-        
-            <li class="service-item">
-        
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-design.svg" alt="wireframe icon" width="40">
-              </div>
-        
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Wireframing & UX Foundations</h4>
-        
-                <p class="service-item-text">
-                  I design strategic wireframes that form the backbone of seamless user experiences, ensuring clarity, usability, and efficiency before moving into full-scale design.
-                </p>
-              </div>
-        
-            </li>
-        
-            <li class="service-item">
-        
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-dev.svg" alt="branding icon" width="40">
-              </div>
-        
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Brand Identity & Visual Strategy</h4>
-        
-                <p class="service-item-text">
-                  From logos to complete branding systems, I craft strong, memorable identities that resonate with your audience and convey your brand’s essence.
-                </p>
-              </div>
-        
-            </li>
-        
-            <li class="service-item">
-        
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-app.svg" alt="logo design icon" width="40">
-              </div>
-        
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">UI Design & Digital Interfaces</h4>
-        
-                <p class="service-item-text">
-                  I create modern, user-friendly interfaces that enhance engagement and provide effortless navigation across web and mobile platforms.
-                </p>
-              </div>
-        
-            </li>
-        
-            <li class="service-item">
-        
-              <div class="service-icon-box">
-                <img src="./assets/images/icon-photo.svg" alt="digital art icon" width="40">
-              </div>
-        
-              <div class="service-content-box">
-                <h4 class="h4 service-item-title">Digital Art & Visual Storytelling</h4>
-        
-                <p class="service-item-text">
-                  My expertise in digital art, poster design, and illustration allows me to create visually captivating compositions that communicate ideas with impact.
-                </p>
-              </div>
-        
-            </li>
-        
-          </ul>
-        
-        </section>
-        
-
-
-        <!--
-          - testimonials
-        -->
-
-        <!-- <section class="testimonials">
-
-          <h3 class="h3 testimonials-title">Testimonials</h3>
-
-          <ul class="testimonials-list has-scrollbar">
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Innovin labs</h4>
-
-                <div class="testimonials-text" data-testimonials-text></div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-            <li class="testimonials-item">
-              <div class="content-card" data-testimonials-item>
-
-                <figure class="testimonials-avatar-box">
-                  <img src="./assets/images/avatar-4.png" alt="Henry william" width="60" data-testimonials-avatar>
-                </figure>
-
-                <h4 class="h4 testimonials-item-title" data-testimonials-title>Henry william</h4>
-
-                <div class="testimonials-text" data-testimonials-text>
-                  <p>
-                    Richard was hired to create a corporate identity. We were very pleased with the work done. She has a
-                    lot of experience
-                    and is very concerned about the needs of client. Lorem ipsum dolor sit amet, ullamcous cididt
-                    consectetur adipiscing
-                    elit, seds do et eiusmod tempor incididunt ut laborels dolore magnarels alia.
-                  </p>
-                </div>
-
-              </div>
-            </li>
-
-          </ul>
-
-        </section> -->
-
-
-        <!--
-          - testimonials modal
-        -->
-
-        <div class="modal-container" data-modal-container>
-
-          <div class="overlay" data-overlay></div>
-
-          <section class="testimonials-modal">
-
-            <button class="modal-close-btn" data-modal-close-btn>
-              <ion-icon name="close-outline"></ion-icon>
-            </button>
-
-            <div class="modal-img-wrapper">
-              <figure class="modal-avatar-box">
-                <img src="./assets/images/avatar-1.png" alt="Daniel lewis" width="80" data-modal-img>
-              </figure>
-
-              <img src="./assets/images/icon-quote.svg" alt="quote icon">
-            </div>
-
-            <div class="modal-content" style="width: 100%;">
-
-              <h4 class="h3 modal-title" data-modal-title>Innovin Labs</h4>
-
-              <time datetime="2021-06-14">14 June, 2021</time>
-
-              <div data-modal-text></div>
-
-              <div class="iframe-container" style="width: 100;">
-                <iframe title="innovin-pdf" src="https://ucarecdn.com/2dd02bb6-781e-4683-afa9-8fc0db15df62/?zoom=page-width" width="100%" height="400" frameborder="0" loading="lazy"></iframe>
-              </div>
-
-            </div>
-
-          </section>
-
-        </div>
-
-
-        <!--
-          - clients
-        -->
-
-        <!-- <section class="clients">
-
-          <h3 class="h3 clients-title">Clients</h3>
-
-          <ul class="clients-list has-scrollbar">
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-1-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-2-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-3-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-4-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-5-color.png" alt="client logo">
-              </a>
-            </li>
-
-            <li class="clients-item">
-              <a href="#">
-                <img src="./assets/images/logo-6-color.png" alt="client logo">
-              </a>
-            </li>
-
-          </ul>
-
-        </section> -->
-
-      </article>
-
-
-
-
-      <!--
-        - #PORTFOLIO
-      -->
-
-      <article class="portfolio" data-page="portfolio">
-
-        <header>
-          <h2 class="h2 article-title">Design Portfolio</h2>
-        </header>
-
-        <section class="projects">
-
-          <ul class="filter-list">
-
-            <li class="filter-item">
-              <button class="active" data-filter-btn>All</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Logo & Brand Identity</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>UI</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Digital Art</button>
-            </li>
-
-            <li class="filter-item">
-              <button data-filter-btn>Posters</button>
-            </li>
-
-          </ul>
-
-          <div class="filter-select-box">
-
-            <button class="filter-select" data-select>
-
-              <div class="select-value" data-selecct-value>Select category</div>
-
-              <div class="select-icon">
-                <ion-icon name="chevron-down"></ion-icon>
-              </div>
-
-            </button>
-
-            <ul class="select-list">
-
-              <li class="select-item">
-                <button data-select-item>All</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Logo & Brand Identity</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>UI</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Digital Art</button>
-              </li>
-
-              <li class="select-item">
-                <button data-select-item>Posters</button>
-              </li>
-
-            </ul>
-
-          </div>
-
-          <ul class="project-list">
-            
-            <li class="project-item active" data-filter-item data-category="logo & brand identity">
-              <a target="_blank" href="https://ucarecdn.com/6f90542f-49e9-4d4b-91f3-89f4adc5ae53/">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/a4a3624e-e743-4603-8819-b5f1df3955f5/-/preview/1000x750/" alt="brawlhalla" loading="lazy">
-                </figure>
-                <h3 class="project-title">Seasonal Designs</h3>
-                <p class="project-category">Logo & Brand Identity</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/40e30173-89dc-4570-a071-0f495ce756ba/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Face Painting</h3>
-                <p class="project-category">posters</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="ui">
-              <a target="_blank" href="https://ucarecdn.com/9df0ea33-98a7-4f60-8835-77c89d4e9dc4/">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/d98c6f8c-9d0f-439f-bb5d-190a4f73ba14/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Innovin Labs</h3>
-                <p class="project-category">UI</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="digital art">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/24eb3eab-f19a-4818-a7ac-a83dbf145300/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Harmony</h3>
-                <p class="project-category">Digital Art</p>
-              </a>
-            </li>
-            
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/3b6f1b6e-1559-4a37-a78b-a4b3eed91d17/-/preview/1000x750/" alt="dsm." loading="lazy">
-                </figure>
-                <h3 class="project-title">Saptha</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-            
-            <li class="project-item active" data-filter-item data-category="logo & brand identity">
-              <a target="_blank" href="https://ucarecdn.com/ed4fb303-d23f-444b-8ee5-355eb7bec6ec/">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/cf2cb142-b21d-4adc-ab23-82c616d7193b/-/preview/1000x750/" alt="finance" loading="lazy">
-                </figure>
-                <h3 class="project-title">Innovin Labs</h3>
-                <p class="project-category">Logo & Brand Identity</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="logo & brand identity">
-              <a target="_blank" href="https://ucarecdn.com/26a85730-915e-4b01-8d5c-eba6cf3ce38f/innoaibi.pdf">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/a95b84a1-2a3e-4940-8506-fe843084ea63/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Inno AI</h3>
-                <p class="project-category">Logo & Brand Identity</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="digital art">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/02185b02-9eba-4b54-a746-cee5324c45b7/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Perspective</h3>
-                <p class="project-category">Digital Art</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/20b38265-f375-4b91-a643-84e2f8a606e8/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Fashion</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-            
-            <li class="project-item active" data-filter-item data-category="logo & brand identity">
-              <a target="_blank" href="https://ucarecdn.com/6ec08afd-cb99-43d0-90da-4278d236f814/junglelodgebi.pdf">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/81dd22e8-34a2-4ce4-8673-590310853e73/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">The Jungle Lodge</h3>
-                <p class="project-category">Logo & Brand Identity</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/9a1f07fb-b4ee-4934-86f0-f16aa80b750a/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Graphic Apparels</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/66dc087c-f7ed-45f2-94f8-07ed35417277/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Instagram Stories</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/37ef8aaa-6710-4c81-88f7-d45f57c29bd9/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">Graphic Tee</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-            
-            <li class="project-item active" data-filter-item data-category="logo & brand identity">
-              <a target="_blank" href="https://ucarecdn.com/6ce61dd8-47a0-43aa-9fce-484630559121/workobi.pdf">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/398d3e0b-d623-4570-8070-7b1f8df416c0/-/preview/1000x750/" alt="fundo" loading="lazy">
-                </figure>
-                <h3 class="project-title">Worko</h3>
-                <p class="project-category">Logo & Brand Identity</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="ui">
-              <a target="_blank" href="https://ucarecdn.com/5cce347f-6f75-44d1-b8bf-cb62645dbe0d/">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/9ee7e3a9-83b6-4b7f-bcfd-a9d1aff17206/-/preview/1000x750/" alt="orizon" loading="lazy">
-                </figure>
-                <h3 class="project-title">The Jungle Lodge</h3>
-                <p class="project-category">UI</p>
-              </a>
-            </li>
-
-            <li class="project-item active" data-filter-item data-category="posters">
-              <a href="#">
-                <figure class="project-img">
-                  <div class="project-item-icon-box">
-                    <ion-icon name="eye-outline"></ion-icon>
-                  </div>
-                  <img src="https://ucarecdn.com/b9011914-ed01-487b-a6e6-93036f50f335/believe.png" alt="metaspark" loading="lazy">
-                </figure>
-                <h3 class="project-title">Believe</h3>
-                <p class="project-category">Posters</p>
-              </a>
-            </li>
-            
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-      <!--
-        - #RESUME
-      -->
-
-      <article class="resume" data-page="resume">
-
-        <header>
-          <h2 class="h2 article-title">Resume</h2>
-        </header>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Education</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Government Engineering College, Palakkad</h4>
-
-              <span>2020 — 2024</span>
-
-              <p class="timeline-text">
-                B.Tech - Electronics and Communication Engineering
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">The Baker Vidyapeedh Senior Secondary School Kottayam</h4>
-
-              <span>2018 — 2020</span>
-
-              <p class="timeline-text">
-                Science - PCMC
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="timeline">
-
-          <div class="title-wrapper">
-            <div class="icon-box">
-              <ion-icon name="book-outline"></ion-icon>
-            </div>
-
-            <h3 class="h3">Experience</h3>
-          </div>
-
-          <ol class="timeline-list">
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Innovin Labs &nbsp;●&nbsp; Project Associate - Design Consulting</h4>
-
-              <span>2024 — Present</span>
-
-              <p class="timeline-text">I combine engineering principles with creative design to deliver innovative and functional solutions.
-                My role focuses on bridging the gap between technology and aesthetics, ensuring seamless integration of
-                design concepts with client needs and project goals.</p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Acute Endeavors Pvt Ltd. &nbsp;●&nbsp; UI-UX Design Intern</h4>
-
-              <span>2023 — 2024</span>
-
-              <p class="timeline-text">
-                Gained hands-on experience in designing intuitive and aesthetically appealing user interfaces, collaborating with cross-functional teams to create seamless digital experiences, and refining designs based on user feedback and research-driven insights.
-              </p>
-
-            </li>
-
-            <li class="timeline-item">
-
-              <h4 class="h4 timeline-item-title">Whitespace (Design Community) &nbsp;●&nbsp; Graphic designer</h4>
-
-              <span>2022 — 2024</span>
-
-              <p class="timeline-text">
-                Designed posters, brochures, logos, t-shirts, and other visual assets for college arts, tech, department events, and fests, contributing to the overall branding and event promotion.
-              </p>
-
-            </li>
-
-          </ol>
-
-        </section>
-
-        <section class="skill">
-
-          <h3 class="h3 skills-title">My skills</h3>
-
-          <ul class="skills-list content-card">
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Web design</h5>
-                <data value="70">70%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 70%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Graphic design</h5>
-                <data value="85">85%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 85%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Branding</h5>
-                <data value="80">80%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 80%;"></div>
-              </div>
-
-            </li>
-
-            <li class="skills-item">
-
-              <div class="title-wrapper">
-                <h5 class="h5">Figma</h5>
-                <data value="90">90%</data>
-              </div>
-
-              <div class="skill-progress-bg">
-                <div class="skill-progress-fill" style="width: 90%;"></div>
-              </div>
-
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #BLOG
-      -->
-
-      <article class="blog" data-page="blog">
-
-        <header>
-          <h2 class="h2 article-title">Blog</h2>
-        </header>
-
-        <section class="blog-posts">
-
-          <ul class="blog-posts-list">
-
-            <li class="blog-post-item">
-              <a target="_blank" href="https://innovinlabs.com/redesigning-for-infinite-innovation-the-story-behind-innovinlabs-new-logo-and-branding/">
-
-                <figure class="blog-banner-box">
-                  <img src="https://ucarecdn.com/b9b06b1d-d6d7-4034-aee5-cef5c52c2678/-/preview/1000x562/" alt="Design conferences in 2022" loading="lazy">
-                </figure>
-
-                <div class="blog-content">
-
-                  <div class="blog-meta">
-                    <p class="blog-category">Design</p>
-
-                    <span class="dot"></span>
-
-                    <time datetime="2022-02-23">Dec 26, 2024</time>
-                  </div>
-
-                  <h3 class="h3 blog-item-title">Redesigning for Infinite Innovation</h3>
-
-                  <p class="blog-text">
-                    The Story Behind InnovinLabs’ New Logo and Branding
-                  </p>
-
-                </div>
-
-              </a>
-            </li>
-
-          </ul>
-
-        </section>
-
-      </article>
-
-
-
-
-
-      <!--
-        - #CONTACT
-      -->
-
-      <article class="contact" data-page="contact">
-
-        <header>
-          <h2 class="h2 article-title">Contact</h2>
-        </header>
-
-        <section class="mapbox" data-mapbox>
-          <figure>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d62944.10387121655!2d76.47930704668264!3d9.594707987708105!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b062ba16c6b435f%3A0xbe2b02f68f8dd06e!2sKottayam%2C%20Kerala!5e0!3m2!1sen!2sin!4v1737772068320!5m2!1sen!2sin"width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </figure>
-        </section>
-
-        <section class="contact-form">
-
-          <h3 class="h3 form-title">Contact Form</h3>
-
-          <form action="#" class="form" data-form>
-
-            <div class="input-wrapper">
-              <input type="text" name="fullname" class="form-input" placeholder="Full name" required data-form-input>
-
-              <input type="email" name="email" class="form-input" placeholder="Email address" required data-form-input>
-            </div>
-
-            <textarea name="message" class="form-input" placeholder="Your Message" required data-form-input></textarea>
-
-            <button class="form-btn" type="submit" disabled data-form-btn>
-              <ion-icon name="paper-plane"></ion-icon>
-              <span>Send Message</span>
-            </button>
-
-          </form>
-
-        </section>
-
-      </article>
-
     </div>
+  </div>
+</nav>
 
-  </main>
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="#work" onclick="closeMobile()">Work</a>
+  <a href="#projects" onclick="closeMobile()">Projects</a>
+  <a href="#philosophy" onclick="closeMobile()">Philosophy</a>
+  <a href="#about" onclick="closeMobile()">About</a>
+  <a href="#blog" onclick="closeMobile()">Blog</a>
+  <a href="#contact" onclick="closeMobile()">Contact</a>
+</div>
 
+<!-- ─── HERO ─────────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-bg">
+    <div class="hero-orb orb-1"></div>
+    <div class="hero-orb orb-2"></div>
+  </div>
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        <span class="t-small" style="letter-spacing:0.06em;text-transform:uppercase;color:var(--ink-2)">Available for opportunities</span>
+      </div>
+      <h1 class="t-display hero-title">
+        Designing products<br>
+        that <em>think,</em><br>
+        feel, and <em>last.</em>
+      </h1>
+      <p class="t-body hero-subtitle">
+        I'm <strong style="color:var(--ink);font-weight:600">Niranjana Pradeep</strong> - a Product Designer with an engineering backbone. I craft digital experiences that sit at the intersection of human clarity, technical depth, and visual purpose.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn btn-primary">View Work <span>↓</span></a>
+        <a href="#about" class="btn btn-outline">About Me</a>
+      </div>
+      <div class="hero-meta">
+        <div class="hero-meta-inner">
+          <div class="hero-stat">
+            <strong>4+</strong>
+            <span>Years designing</span>
+          </div>
+          <div class="hero-stat">
+            <strong>15+</strong>
+            <span>Projects shipped</span>
+          </div>
+          <div class="hero-stat">
+            <strong>3</strong>
+            <span>Design disciplines</span>
+          </div>
+          <div class="hero-stat">
+            <strong>1</strong>
+            <span>Mission: clarity</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-rings">
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+      <div style="font-size:3.5rem;z-index:1;user-select:none;">⬡</div>
+    </div>
+    <div class="hero-card-float hcf-1" style="background:var(--bg-card);border:1px solid var(--border);">
+      <div class="hcf-icon">🎯</div>
+      <div class="hcf-label">Product Strategy</div>
+      <div class="hcf-sub">Problem → Solution</div>
+    </div>
+    <div class="hero-card-float hcf-2" style="background:var(--bg-card);border:1px solid var(--border);">
+      <div class="hcf-icon">✦</div>
+      <div class="hcf-label">Design Systems</div>
+      <div class="hcf-sub">Scale & Consistency</div>
+    </div>
+    <div class="hero-card-float hcf-3" style="background:var(--bg-card);border:1px solid var(--border);">
+      <div class="hcf-icon">🔬</div>
+      <div class="hcf-label">UX Research</div>
+      <div class="hcf-sub">Data-informed</div>
+    </div>
+  </div>
+</section>
 
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <div class="marquee-item">UI/UX Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Product Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Branding & Identity <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Design Systems <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Digital Strategy <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Graphic Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Prototyping <div class="marquee-dot"></div></div>
+    <div class="marquee-item">UX Research <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Figma Expert <div class="marquee-dot"></div></div>
+    <div class="marquee-item">UI/UX Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Product Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Branding & Identity <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Design Systems <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Digital Strategy <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Graphic Design <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Prototyping <div class="marquee-dot"></div></div>
+    <div class="marquee-item">UX Research <div class="marquee-dot"></div></div>
+    <div class="marquee-item">Figma Expert <div class="marquee-dot"></div></div>
+  </div>
+</div>
 
+<!-- ─── FEATURED CASE STUDIES ─────────────────────────── -->
+<section id="work" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">Featured Work</p>
+      <div class="divider"></div>
+      <h2 class="t-h1">Designs that<br>tell the full story.</h2>
+      <!-- <p class="t-body" style="max-width:480px;margin-top:16px">Not just pretty screens - these are end-to-end product journeys from problem discovery to measurable outcome.</p> -->
+    </div>
+    <div class="cs-grid">
+      <!-- Card 1 - Pulse -->
+      <div class="cs-card large reveal" onclick="openModal('pulse')">
+        <div class="cs-thumb thumb-pulse">
+          <div class="cs-thumb-inner"><img src="media/innovin.png" alt="Innovin Labs" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="cs-thumb-badge">Brand Identity</div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tags">
+            <span class="tag tag-accent">Brand identity</span>
+            <span class="tag">Logo Design</span>
+            <!-- <span class="tag">Mobile App</span> -->
+          </div>
+          <h3 class="cs-title">Innovin Labs - Logo & Brand Identity</h3>
+          <p class="cs-desc">A modern brand identity for a tech and AI-driven company, focused on clarity, innovation, and a scalable visual system across digital products.</p>
+          <div class="cs-footer">
+            <span class="cs-impact">↑ scalable brand system</span>
+            <div class="cs-arrow">→</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 2 - Goodlife -->
+      <div class="cs-card reveal reveal-delay-1" onclick="openModal('goodlife')">
+        <div class="cs-thumb thumb-good">
+          <div class="cs-thumb-inner">🛒</div>
+          <div class="cs-thumb-badge">Case Study</div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tags">
+            <span class="tag tag-accent">Product Design</span>
+            <span class="tag">UX Exploration</span>
+          </div>
+          <h3 class="cs-title">Designing for Decision Making Under Uncertainty</h3>
+          <p class="cs-desc">Structured multiple inputs in a decision-heavy interface to reduce hesitation and help users act with clarity.</p>
+          <div class="cs-footer">
+            <span class="cs-impact"></span>
+            <div class="cs-arrow">→</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 3 - Innovin Labs -->
+      <div class="cs-card reveal reveal-delay-2" onclick="openModal('innovin')">
+        <div class="cs-thumb thumb-innovin">
+          <div class="cs-thumb-inner"><img src="media/jungle-lodge.png" alt="The Jungle Lodge" style="width:100%;height:100%;object-fit:cover;"></div>
+          <div class="cs-thumb-badge">Branding</div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tags">
+            <span class="tag tag-accent">UI Design</span>
+            <span class="tag">Branding</span>
+          </div>
+          <h3 class="cs-title">The Jungle Lodge - Logo & Brand Identity</h3>
+          <p class="cs-desc">A nature-inspired identity for a forest retreat, designed to evoke calm, escape, and a connection to the outdoors.</p>
+          <div class="cs-footer">
+            <span class="cs-impact"></span>
+            <div class="cs-arrow">→</div>
+          </div>
+        </div>
+      </div>
+      <!-- Card 4 - Branding -->
+      <!-- <div class="cs-card reveal reveal-delay-3" onclick="openModal('branding')">
+        <div class="cs-thumb thumb-brand">
+          <div class="cs-thumb-inner">✦</div>
+          <div class="cs-thumb-badge">Brand Identity</div>
+        </div>
+        <div class="cs-body">
+          <div class="cs-tags">
+            <span class="tag tag-accent">Branding</span>
+            <span class="tag">Logo Design</span>
+          </div>
+          <h3 class="cs-title">Brand Identity Collection</h3>
+          <p class="cs-desc">A curated series of logo and brand identity projects across fintech, healthtech, and consumer apps - from strategy to the final mark.</p>
+          <div class="cs-footer">
+            <span class="cs-impact">12 brands launched</span>
+            <div class="cs-arrow">→</div>
+          </div>
+        </div>
+      </div> -->
+    </div>
+  </div>
+</section>
 
+<!-- ─── CASE STUDY MODALS ───────────────────────────── -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="modalBox">
+    <div class="modal-hero" id="modalHero"></div>
+    <div class="modal-body" id="modalContent"></div>
+  </div>
+</div>
 
+<!-- ─── ALL PROJECTS ──────────────────────────────────── -->
+<section id="projects" class="section" style="background:var(--bg-muted)">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">All Projects</p>
+      <div class="divider"></div>
+      <h2 class="t-h1">The full spectrum.</h2>
+      <p class="t-body" style="max-width:440px;margin-top:16px">Across products, brands, graphics, and experiments - each piece reflects how I think about design.</p>
+    </div>
+    <div class="filter-bar reveal">
+      <button class="filter-btn active" onclick="filterProjects('all',this)">All</button>
+      <button class="filter-btn" onclick="filterProjects('ux',this)">UX / Product</button>
+      <button class="filter-btn" onclick="filterProjects('branding',this)">Branding</button>
+      <button class="filter-btn" onclick="filterProjects('graphics',this)">Graphics</button>
+      <button class="filter-btn" onclick="filterProjects('digital',this)">Digital Art</button>
+    </div>
+    <div class="projects-grid reveal">
+      <div class="proj-card" data-cat="branding" onclick="openModal('innoai')">
+        <div class="proj-thumb"><img src="media/innoai-branding.png" alt="InnoAI" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">InnoAI</div>
+          <div class="proj-sub">Branding</div>
+          <div class="proj-tag"><span class="tag">Branding</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('facepainting')">
+        <div class="proj-thumb"><img src="media/face-painting-poster.png" alt="Face Painting" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Face Painting</div>
+          <div class="proj-sub">Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="digital" onclick="openModal('harmony')">
+        <div class="proj-thumb"><img src="media/harmony-digital-art.png" alt="Harmony" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Harmony</div>
+          <div class="proj-sub">Digital Art</div>
+          <div class="proj-tag"><span class="tag">Digital Art</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('fashion')">
+        <div class="proj-thumb"><img src="media/fashion-design-poster.png" alt="Fashion" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Fashion</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="branding" onclick="openModal('worko')">
+        <div class="proj-thumb"><img src="media/worko-branding.png" alt="Worko" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Worko</div>
+          <div class="proj-sub">Branding</div>
+          <div class="proj-tag"><span class="tag">Branding</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('saptha')">
+        <div class="proj-thumb"><img src="media/saptha-design-poster.png" alt="Saptha" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Saptha</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('jerseys')">
+        <div class="proj-thumb"><img src="media/jerseys-design-poster.png" alt="Jerseys" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Jerseys</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="digital" onclick="openModal('perspective')">
+        <div class="proj-thumb"><img src="media/perspective-digital-art.png" alt="Perspective" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Perspective</div>
+          <div class="proj-sub">Digital Art</div>
+          <div class="proj-tag"><span class="tag">Digital Art</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="branding" onclick="openModal('pulse')">
+        <div class="proj-thumb"><img src="media/innovin.png" alt="Innovin Labs" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Innovin Labs</div>
+          <div class="proj-sub">Brand Identity</div>
+          <div class="proj-tag"><span class="tag">Branding</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="ux" onclick="openModal('goodlife')">
+        <div class="proj-thumb" style="background:linear-gradient(135deg,#0A4A2E 0%,#1A6B45 50%,#0D3D24 100%);display:flex;align-items:center;justify-content:center;font-size:3rem;">🛒</div>
+        <div class="proj-info">
+          <div class="proj-title">Designing for Decision-Making Under Uncertainty</div>
+          <div class="proj-sub">UX Design · Cognitive Design</div>
+          <div class="proj-tag"><span class="tag">UX / Product</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="branding" onclick="openModal('seasonal')">
+        <div class="proj-thumb"><img src="media/seasonal-branding.png" alt="Seasonal" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Seasonal</div>
+          <div class="proj-sub">Branding</div>
+          <div class="proj-tag"><span class="tag">Branding</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('christmas')">
+        <div class="proj-thumb"><img src="media/christmas-design-poster.png" alt="Christmas" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Christmas</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="branding" onclick="openModal('innovin')">
+        <div class="proj-thumb"><img src="media/jungle-lodge.png" alt="The Jungle Lodge" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">The Jungle Lodge</div>
+          <div class="proj-sub">Brand Identity</div>
+          <div class="proj-tag"><span class="tag">Branding</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('hoodie')">
+        <div class="proj-thumb"><img src="media/hoodie-design-poster.png" alt="Hoodie" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Hoodie</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+      <div class="proj-card" data-cat="graphics" onclick="openModal('believe')">
+        <div class="proj-thumb"><img src="media/believe-design-poster.png" alt="Believe" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+        <div class="proj-info">
+          <div class="proj-title">Believe</div>
+          <div class="proj-sub">Design Poster</div>
+          <div class="proj-tag"><span class="tag">Graphics</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!--
-    - custom js link
-  -->
-  <script src="./assets/js/script.js"></script>
+<!-- ─── DESIGN PHILOSOPHY ─────────────────────────────── -->
+<section id="philosophy" class="section">
+  <div class="container">
+    <div class="phil-grid">
+      <div class="phil-left reveal">
+        <p class="t-label" style="color:rgba(255,255,255,0.4);margin-bottom:16px">Design Philosophy</p>
+        <h2 class="phil-tagline">
+          Design is <em>never</em> decoration.<br>
+          It's how clarity<br>
+          becomes <em>action.</em>
+        </h2>
+        <p style="margin-top:28px;font-size:0.9rem;opacity:0.5;line-height:1.7;max-width:380px">My approach to design is grounded in engineering discipline and human empathy - two forces that together produce work that is both beautiful and functional.</p>
+      </div>
+      <div class="phil-items reveal reveal-delay-2">
+        <div class="phil-item">
+          <div class="phil-item-num">01</div>
+          <h3>Problem-First Thinking</h3>
+          <p>I resist jumping to solutions. Every project begins with a deep investigation of the problem space - stakeholder interviews, competitive analysis, and usage data tell the real story before a single frame is drawn.</p>
+        </div>
+        <div class="phil-item">
+          <div class="phil-item-num">02</div>
+          <h3>Human-Centered, Engineer-Informed</h3>
+          <p>My engineering background means I design with implementation in mind. Beautiful interactions that can't be built serve no one. I push creative boundaries within the bounds of what's genuinely possible.</p>
+        </div>
+        <!-- <div class="phil-item">
+          <div class="phil-item-num">03</div>
+          <h3>Data-Informed, Instinct-Led</h3>
+          <p>Analytics and research set the compass, but design decisions still require taste. I use data to pressure-test intuition - not replace it.</p>
+        </div> -->
+        <!-- <div class="phil-item">
+          <div class="phil-item-num">04</div>
+          <h3>Visual Clarity as Respect</h3>
+          <p>Clear interfaces respect users' time and cognitive load. Every visual choice should reduce friction, not add noise. Simplicity is the hardest thing to achieve - and the most valuable.</p>
+        </div> -->
+        <div class="phil-item">
+          <div class="phil-item-num">03</div>
+          <h3>Systems Over Surfaces</h3>
+          <p>I think in systems, not screens. A cohesive design language scales better, ships faster, and maintains integrity across teams and platforms over time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <!--
-    - ionicon link
-  -->
-  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<!-- ─── ABOUT ─────────────────────────────────────────── -->
+<section id="about" class="section">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-portrait reveal">
+        <div class="portrait-frame"><img src="media/niranjana.png" alt="Niranjana Pradeep" style="width:100%;height:100%;object-fit:cover;display:block;object-position:center 20%;"></div>
+        <div class="portrait-label">
+          <div class="portrait-label-icon">⚡</div>
+          <div class="portrait-label-text">
+            <strong>Niranjana Pradeep</strong>
+            <span>Product Designer at <strong>Innovin Labs</strong></span>
+          </div>
+        </div>
+        <div style="margin-top:16px;display:flex;gap:12px;flex-wrap:wrap">
+          <div class="tool-pill">🇮🇳 Kottayam, Kerala, India</div>
+          <div class="tool-pill">📐 Figma Certified</div>
+        </div>
+      </div>
+      <div class="about-content reveal reveal-delay-2">
+        <p class="t-label">About Me</p>
+        <div class="divider"></div>
+        <h2 class="t-h1">Designer.<br>Engineer.<br>Builder.</h2>
+        <div class="about-highlight">
+          "I became a designer because engineering taught me to love problems. I build products because design taught me how to solve them beautifully."
+        </div>
+        <p class="t-body">
+          I started in engineering - learning to think in systems, constraints, and logic. But it was design that taught me the part engineering couldn't: that the best solutions are the ones people actually want to use.
+        </p>
+        <p class="t-body">
+          Over the past five years, I've designed everything from zero-to-one mobile apps and browser extensions to full brand identities and design systems. I've worked across product, marketing, and developer contexts - giving me a rare multi-dimensional view of what makes digital products work.
+        </p>
+        <!-- <p class="t-body">
+          At <strong style="color:var(--accent)">Innovin Labs</strong>, I lead the design and product thinking for a growing portfolio of technology solutions - building the kind of company culture where great design is not just expected, but essential.
+        </p> -->
+        <p class="t-body">
+          In addition, I participate in critique circles, share process breakdowns, and mentor up-and-coming designers who are juggling their craft and careers.
+        </p>
+        <div style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px">
+          <a href="#contact" class="btn btn-primary">Work with me →</a>
+          <!-- <a href="#" class="btn btn-outline">Download CV</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
+<!-- ─── SKILLS ─────────────────────────────────────────── -->
+<section id="skills" class="section" style="background:var(--bg-muted)">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="t-label">Skills & Expertise</p>
+      <div class="divider"></div>
+      <h2 class="t-h1">What I bring to the table.</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <div class="skill-group-icon">🎯</div>
+        <h3>Product Design</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span>UX Strategy</span><div class="skill-bar"><div class="skill-fill" data-w="92"></div></div><span class="skill-pct">92%</span></div>
+          <div class="skill-item"><span>Wireframing</span><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div><span class="skill-pct">95%</span></div>
+          <div class="skill-item"><span>Interaction Design</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
+          <div class="skill-item"><span>Prototyping</span><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
+        </div>
+      </div>
+      <div class="skill-group reveal reveal-delay-1">
+        <div class="skill-group-icon">🔬</div>
+        <h3>Research & Strategy</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span>User Research</span><div class="skill-bar"><div class="skill-fill" data-w="85"></div></div><span class="skill-pct">85%</span></div>
+          <div class="skill-item"><span>Product Strategy</span><div class="skill-bar"><div class="skill-fill" data-w="82"></div></div><span class="skill-pct">82%</span></div>
+          <div class="skill-item"><span>Competitive Analysis</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
+          <div class="skill-item"><span>Usability Testing</span><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div><span class="skill-pct">80%</span></div>
+        </div>
+      </div>
+      <div class="skill-group reveal reveal-delay-2">
+        <div class="skill-group-icon">✦</div>
+        <h3>Visual & Brand</h3>
+        <div class="skill-list">
+          <div class="skill-item"><span>UI Design</span><div class="skill-bar"><div class="skill-fill" data-w="96"></div></div><span class="skill-pct">96%</span></div>
+          <div class="skill-item"><span>Brand Identity</span><div class="skill-bar"><div class="skill-fill" data-w="90"></div></div><span class="skill-pct">90%</span></div>
+          <div class="skill-item"><span>Design Systems</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div><span class="skill-pct">88%</span></div>
+          <div class="skill-item"><span>Graphic Design</span><div class="skill-bar"><div class="skill-fill" data-w="92"></div></div><span class="skill-pct">92%</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="tools-section reveal">
+      <p class="t-label">Tools & Platforms</p>
+      <div class="divider"></div>
+      <div class="tools-grid">
+        <div class="tool-pill">🎨 Figma</div>
+        <div class="tool-pill">📐 FigJam</div>
+        <div class="tool-pill">⚡ Framer</div>
+        <!-- <div class="tool-pill">🖌 Adobe XD</div> -->
+        <!-- <div class="tool-pill">🎭 After Effects</div> -->
+        <!-- <div class="tool-pill">📦 Illustrator</div> -->
+        <div class="tool-pill">🖼 Photoshop</div>
+        <div class="tool-pill">🔲 Notion</div>
+        <!-- <div class="tool-pill">📊 Maze</div> -->
+        <!-- <div class="tool-pill">🔗 Lottie</div> -->
+        <!-- <div class="tool-pill">🌐 Webflow</div> -->
+        <div class="tool-pill">🌐 JIRA</div>
+        <div class="tool-pill">💻 HTML/CSS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BLOG / THINKING ────────────────────────────────── -->
+<section id="blog" class="section">
+  <div class="container">
+    <div class="section-header reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px">
+      <div>
+        <p class="t-label">Thinking Out Loud</p>
+        <div class="divider"></div>
+        <h2 class="t-h1">Design thinking,<br>in writing.</h2>
+      </div>
+      <a href="#" class="btn btn-outline">All Articles →</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal">
+        <div class="blog-emoji">🔖</div>
+        <div class="blog-date">February 2026</div>
+        <div class="blog-title">Redesigning for Infinite Innovation: The Story Behind Innovin Labs’ New Logo and Branding</div>
+        <div class="blog-excerpt">When we began discussions on the rebrand, we wanted the new logo to capture who we are and what we stand for. From our conversations, the idea of infinite innovation emerged as a defining theme. We also knew we wanted to.</div>
+        <a class="blog-readmore" href="https://innovinlabs.com/blog/redesigning-for-infinite-innovation-innovin-labs-new-logo-branding" target="_blank" rel="noopener noreferrer">Read more →</a>
+      </div>
+      <!-- <div class="blog-card reveal reveal-delay-1">
+        <div class="blog-emoji">📐</div>
+        <div class="blog-date">January 2025</div>
+        <div class="blog-title">The Case for Boring Design Systems (A Love Letter to Constraints)</div>
+        <div class="blog-excerpt">Constraints are the best creative brief you never asked for. A reflection on why the best design systems feel invisible - and how to build them that way.</div>
+        <div class="blog-readmore">Read more →</div>
+      </div>
+      <div class="blog-card reveal reveal-delay-2">
+        <div class="blog-emoji">🎯</div>
+        <div class="blog-date">November 2024</div>
+        <div class="blog-title">Problem Framing is a Superpower Most Designers Skip</div>
+        <div class="blog-excerpt">The hardest part of design isn't drawing the right answer - it's asking the right question. A breakdown of how I approach problem definition before any wireframe.</div>
+        <div class="blog-readmore">Read more →</div>
+      </div> -->
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT ────────────────────────────────────────── -->
+<section id="contact" class="section">
+  <div class="contact-orb"></div>
+  <div class="container">
+    <div class="contact-inner reveal">
+      <p class="t-label" style="color:rgba(255,255,255,0.4);margin-bottom:16px">Get In Touch</p>
+      <h2 class="contact-title">
+        Let's build<br>something <em style="font-style:italic;color:var(--accent)">remarkable.</em>
+      </h2>
+      <p class="contact-subtitle">Whether you're hiring, collaborating, or just starting a conversation about design - I'd love to hear from you.</p>
+      <div class="contact-actions">
+        <a href="https://wa.me/919207624797" class="btn btn-accent">Send a Message</a>
+        <!-- <a href="#" class="btn" style="background:rgba(255,255,255,0.1);color:#fff;border:1px solid rgba(255,255,255,0.2)">📄 Download Resume</a> -->
+      </div>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/niranjana-pradeep-bb0461224/" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+          LinkedIn
+        </a>
+        <!-- <a href="#" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+          GitHub
+        </a> -->
+        <!-- <a href="#" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
+          Dribbble
+        </a> -->
+        <a href="mailto:pradeepniranjana02@gmail.com" class="contact-link">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <span class="t-small">© 2026 Niranjana Pradeep · Innovin Labs</span>
+    <span class="t-small">Designed with intention. Built with care.</span>
+    <a href="#hero" class="btn-outline btn" style="padding:8px 16px;font-size:0.8rem">↑ Top</a>
+  </div>
+</footer>
+
+<!-- ─── PDF.js ───────────────────────────────────────── -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs" type="module"></script>
+<script type="module">
+  import * as pdfjsLib from 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.min.mjs';
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.4.168/pdf.worker.min.mjs';
+  window.renderPDF = async function(url, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    const pdf = await pdfjsLib.getDocument(url).promise;
+    container.innerHTML = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: container.clientWidth / page.getViewport({ scale: 1 }).width });
+      const canvas = document.createElement('canvas');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      canvas.style.cssText = 'width:100%;display:block;';
+      container.appendChild(canvas);
+      await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+    }
+  };
+</script>
+
+<!-- ─── CASE STUDY DATA + JS ───────────────────────────── -->
+<script>
+const caseStudies = {
+  pulse: {
+    emoji: '🎵',
+    bg: 'linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%)',
+    title: 'Innovin Labs - Logo & Brand Identity',
+    subtitle: 'Brand Identity · Logo Designs',
+    pdf: 'media/innovinlabs-brand-identity.pdf',
+    sections: [
+      { step: '01', title: 'The Problem', content: 'Event discovery is broken. Platforms are cluttered, recommendations feel random, and booking flows are friction-filled. Young urban professionals miss events they\'d love - not from lack of interest, but poor information architecture and discovery design.' },
+      { step: '02', title: 'Research & Context', content: 'Conducted 18 user interviews across age groups 22–35. Key insight: users don\'t lack options - they lack context. They want to know "will I like this?" before they commit. Secondary research revealed that 74% of ticket sales happen within 48 hours of the event, making real-time discovery critical.', cards: [{ h: 'Pain Point 1', p: 'Too many options, no clear signal. Event feeds feel like spam.' }, { h: 'Pain Point 2', p: 'Booking feels risky without social proof or AI-matched context.' }] },
+      { step: '03', title: 'UX Exploration & Decisions', content: 'Explored three primary flows: proximity-based (rejected - too random), interest-graph (shortlisted), and contextual AI (chosen). The AI approach scored highest on perceived relevance in 5-second tests with 24 participants. Wireframed 3 competing IA structures before landing on a card-swipe discovery metaphor with persistent filters.' },
+      { step: '04', title: 'UI Design', content: 'Built a full design system in Figma with 120+ components, dark-first aesthetic, and motion principles. Key design decisions: high-contrast event cards with dominant imagery, inline booking flow with <3 taps to complete, AI explanation surfaces ("We think you\'ll like this because...").' },
+      { step: '05', title: 'Outcome & Learnings', content: 'Prototype tested with 40 users. 3.2× higher conversion vs benchmark, 89% task completion on booking flow, 4.7/5 satisfaction score. Key learning: transparency in AI reasoning builds more trust than hiding the algorithm.', outcomes: [{ n: '3.2×', l: 'Conversion lift' }, { n: '89%', l: 'Task completion' }, { n: '4.7', l: 'Satisfaction score' }] }
+    ]
+  },
+  goodlife: {
+    emoji: '🛒',
+    bg: 'linear-gradient(135deg, #0A4A2E 0%, #1A6B45 50%, #0D3D24 100%)',
+    title: 'Designing for Decision-Making Under Uncertainty',
+    subtitle: 'UX Design · Information Architecture · Cognitive Design',
+    sections: [
+      { step: '01', title: 'Overview', content: 'In many product experiences, users are presented with multiple pieces of information intended to guide decisions. However, when these inputs are shown together without structure, they often create confusion instead of clarity. This work focused on improving how such information is presented so users can quickly understand what matters and act with confidence.' },
+      { step: '02', title: 'Problem', content: 'Users were exposed to multiple inputs at the same time, each indicating a different type of value — one suggested immediate benefit, another hinted at potential value, others provided contextual suggestions. While individually useful, together they led to difficulty in identifying what to prioritize, uncertainty about which input to trust, and hesitation before taking action. The core issue was not the lack of information, but the lack of structure in how it was presented.', cards: [{ h: 'Signal Overload', p: 'Multiple inputs shown equally with no clear hierarchy made it impossible to know where to focus.' }, { h: 'Structural Gap', p: 'The problem wasn\'t missing information — it was the absence of structure to make sense of it.' }] },
+      { step: '03', title: 'Constraints', content: 'Inputs did not always update simultaneously. Some values could not be determined precisely. Interface space was limited. Experience needed to remain lightweight and non-intrusive.' },
+      { step: '04', title: 'Approach & Key Design Decisions', content: 'Instead of adding more information, the focus was on structuring what is already available, guiding attention intentionally, and reducing unnecessary comparison effort. A primary signal was introduced at the point of decision — rather than presenting all inputs equally, one clear signal was surfaced as the primary driver of action, with supporting inputs positioned as secondary. Information was layered using progressive disclosure: users saw a simplified view initially, with additional details revealed on interaction. False precision in early states was avoided — in uncertain situations, the interface communicated availability, relevance, and potential usefulness instead of exact numbers. Related inputs were grouped to reduce cognitive load, and edge cases (no inputs, conflicting data, delayed loads) were explicitly designed for with clear fallback messaging.' },
+      { step: '05', title: 'Outcome & Key Learning', content: 'The final experience focused on surfacing one clear direction, supporting it with contextual information, revealing complexity progressively, and maintaining consistency across different states.', outcomes: [{ n: '↓', l: 'Hesitation at decision points' }, { n: '↑', l: 'Clarity of information' }, { n: '↑', l: 'Confidence in actions' }] }
+    ]
+  },
+  innovin: {
+    emoji: '⚡',
+    bg: 'linear-gradient(135deg, #0A2A0E 0%, #1A5C22 50%, #2E7D32 100%)',
+    title: 'The Jungle Lodge - Logo & Brand Identity',
+    subtitle: 'Brand Identity · Logo Design',
+    pdf: 'media/jungle-lodge-brand-identity.pdf',
+    sections: []
+  },
+  branding: {
+    emoji: '✦',
+    bg: 'linear-gradient(135deg, #1A0A2E 0%, #6B2FA0 50%, #9B59B6 100%)',
+    title: 'Brand Identity Collection',
+    subtitle: 'Branding · Logo Design · Identity Systems',
+    sections: [
+      { step: '01', title: 'Design Approach', content: 'Every brand engagement starts with a brand strategy workshop. Before any sketch, I want to understand: who are you for, what do you stand for, and what feeling should your mark leave behind? Visual identity is just the final expression of a deeply considered position.' },
+      { step: '02', title: 'Process', content: 'Each identity project moves through: brand audit → competitive mapping → mood boarding → mark exploration (min. 20 directions) → refinement → system documentation. No mark is finalized without thorough context testing across digital and print.', cards: [{ h: 'Key Principle', p: 'A logo is never done in isolation. It must work in a system.' }, { h: 'Quality Test', p: 'Every mark is tested in B&W, inverted, at 16px, and in motion.' }] },
+      { step: '03', title: 'Selected Work', content: 'Clients across fintech (RedSignal), healthtech (Bloom), consumer (Sunnr), and SaaS (Waypoint). Deliverables include: primary mark, secondary marks, wordmark, color system, type selection, usage documentation, and motion guidelines.' },
+      { step: '04', title: 'Outcome', content: '12 brands launched in 2023–2024. Consistent client feedback: "Our team finally rallied behind a visual identity." One client reported 34% increase in pitch success rate after rebrand. Brand design is not decoration - it\'s competitive positioning made visible.', outcomes: [{ n: '12', l: 'Brands launched' }, { n: '34%', l: 'Pitch lift (client)' }, { n: '100%', l: 'Client retention' }] }
+    ]
+  },
+  innoai: {
+    emoji: '🤖',
+    bg: 'linear-gradient(135deg, #0A0A1A 0%, #1A1A3E 50%, #2E2E6A 100%)',
+    title: 'InnoAI',
+    subtitle: 'Brand Identity · Logo Design',
+    pdf: 'media/innoai-brand-identity.pdf',
+    sections: []
+  },
+  seasonal: {
+    emoji: '🍂',
+    bg: 'linear-gradient(135deg, #1A0A00 0%, #8B4513 50%, #D2691E 100%)',
+    title: 'Seasonal',
+    subtitle: 'Brand Identity · Logo Design',
+    pdf: 'media/seasonal-brand-identity.pdf',
+    sections: []
+  },
+  worko: {
+    emoji: '💼',
+    bg: 'linear-gradient(135deg, #001A2E 0%, #003D6B 50%, #0066B3 100%)',
+    title: 'Worko',
+    subtitle: 'Brand Identity · Logo Design',
+    pdf: 'media/worko-brand-identity.pdf',
+    sections: []
+  },
+  christmas:   { title: 'Christmas',    subtitle: 'Design Poster', image: 'media/christmas-design-poster.png', sections: [] },
+  saptha:      { title: 'Saptha',       subtitle: 'Design Poster', image: 'media/saptha-design-poster.png',    sections: [] },
+  believe:     { title: 'Believe',      subtitle: 'Design Poster', image: 'media/believe-design-poster.png',   sections: [] },
+  hoodie:      { title: 'Hoodie',       subtitle: 'Design Poster', image: 'media/hoodie-design-poster.png',    sections: [] },
+  harmony:     { title: 'Harmony',      subtitle: 'Digital Art',   image: 'media/harmony-digital-art.png',     sections: [] },
+  facepainting:{ title: 'Face Painting',subtitle: 'Poster',        image: 'media/face-painting-poster.png',    sections: [] },
+  jerseys:     { title: 'Jerseys',      subtitle: 'Design Poster', image: 'media/jerseys-design-poster.png',   sections: [] },
+  fashion:     { title: 'Fashion',      subtitle: 'Design Poster', image: 'media/fashion-design-poster.png',   sections: [] },
+  perspective: { title: 'Perspective',  subtitle: 'Digital Art',   image: 'media/perspective-digital-art.png', sections: [] }
+};
+
+function openModal(id) {
+  const cs = caseStudies[id];
+  if (!cs) return;
+  const hero = document.getElementById('modalHero');
+  hero.style.display = '';
+  hero.style.background = cs.bg;
+  hero.innerHTML = `<span style="font-size:5rem;z-index:1">${cs.emoji}</span>
+    <button class="modal-close" onclick="closeModal()">✕</button>`;
+  const body = document.getElementById('modalContent');
+  body.style.padding = '';
+  let html = '';
+  if (cs.image) {
+    hero.style.display = 'none';
+    body.style.padding = '0';
+    html += `<div style="position:relative">
+      <button class="modal-close" onclick="closeModal()" style="position:fixed;top:20px;right:20px;z-index:300">✕</button>
+      <img src="${cs.image}" alt="${cs.title}" style="width:100%;display:block;border-radius:calc(var(--radius)*2);">
+      <div style="padding:20px 24px;border-top:1px solid var(--border)">
+        <strong style="font-size:1rem">${cs.title}</strong>
+        <span style="font-size:0.85rem;color:var(--ink-3);margin-left:10px">${cs.subtitle}</span>
+      </div>
+    </div>`;
+  } else if (cs.pdf) {
+    hero.style.display = 'none';
+    body.style.padding = '0';
+    html += `<div style="padding:24px 32px 20px;border-bottom:1px solid var(--border)">
+      <h2 style="font-family:var(--serif);font-size:clamp(1.4rem,2.5vw,1.9rem);letter-spacing:-0.02em;margin-bottom:4px">${cs.title}</h2>
+      <p class="t-small" style="margin-bottom:0;color:var(--ink-3)">${cs.subtitle}</p>
+    </div>`;
+    html += `<div style="position:relative;background:var(--bg-muted)">
+      <button class="modal-close" onclick="closeModal()" style="position:fixed;top:20px;right:20px;z-index:300">✕</button>
+      <div id="pdfCanvas" style="width:100%;overflow-y:auto;max-height:92vh;"></div>
+    </div>`;
+  } else {
+    html += `<div class="modal-section">
+      <h2 style="font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);letter-spacing:-0.02em;margin-bottom:8px">${cs.title}</h2>
+      <p class="t-small" style="margin-bottom:0">${cs.subtitle}</p>
+    </div>`;
+    cs.sections.forEach(s => {
+      html += `<div class="modal-section">
+        <div class="modal-step-label">
+          <div class="modal-step-num">${s.step}</div>
+          <h3 style="font-size:0.95rem;font-weight:700;text-transform:uppercase;letter-spacing:0.06em;color:var(--accent)">${s.title}</h3>
+        </div>
+        <p class="t-body" style="font-size:0.9rem">${s.content}</p>`;
+      if (s.cards) {
+        html += `<div class="modal-insight-grid">`;
+        s.cards.forEach(c => {
+          html += `<div class="modal-insight-card"><h4>${c.h}</h4><p>${c.p}</p></div>`;
+        });
+        html += `</div>`;
+      }
+      if (s.outcomes) {
+        html += `<div class="modal-outcome-stat">`;
+        s.outcomes.forEach(o => {
+          html += `<div><div class="outcome-num">${o.n}</div><div class="outcome-label">${o.l}</div></div>`;
+        });
+        html += `</div>`;
+      }
+      html += `</div>`;
+    });
+  }
+  body.innerHTML = html;
+  if (cs.pdf && window.renderPDF) window.renderPDF(cs.pdf, 'pdfCanvas');
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+function filterProjects(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.proj-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// NAV SCROLL
+const nav = document.getElementById('mainNav');
+const progressBar = document.getElementById('progressBar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+  const total = document.body.scrollHeight - window.innerHeight;
+  progressBar.style.width = (window.scrollY / total * 100) + '%';
+});
+
+// THEME TOGGLE
+const themeToggle = document.getElementById('themeToggle');
+let dark = false;
+themeToggle.addEventListener('click', () => {
+  dark = !dark;
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  themeToggle.textContent = dark ? '☀️' : '🌙';
+});
+
+// MOBILE NAV
+const hamburger = document.getElementById('hamburger');
+const mobileNav = document.getElementById('mobileNav');
+let mobileOpen = false;
+hamburger.addEventListener('click', () => {
+  mobileOpen = !mobileOpen;
+  mobileNav.classList.toggle('open', mobileOpen);
+  document.body.style.overflow = mobileOpen ? 'hidden' : '';
+});
+function closeMobile() {
+  mobileOpen = false;
+  mobileNav.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// SCROLL REVEAL
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// SKILL BARS
+const skillObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('.skill-fill').forEach(bar => {
+        bar.style.width = bar.dataset.w + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.skill-group').forEach(el => skillObserver.observe(el));
+
+// CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+const cursorFollow = document.getElementById('cursorFollow');
+let mx = 0, my = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+  cursorFollow.style.left = mx + 'px';
+  cursorFollow.style.top = my + 'px';
+});
+document.querySelectorAll('a, button, .cs-card, .proj-card, .blog-card').forEach(el => {
+  el.addEventListener('mouseenter', () => {
+    cursor.style.width = '6px'; cursor.style.height = '6px';
+    cursorFollow.style.width = '56px'; cursorFollow.style.height = '56px';
+    cursorFollow.style.opacity = '0.6';
+  });
+  el.addEventListener('mouseleave', () => {
+    cursor.style.width = '10px'; cursor.style.height = '10px';
+    cursorFollow.style.width = '36px'; cursorFollow.style.height = '36px';
+    cursorFollow.style.opacity = '0.4';
+  });
+});
+
+// KEYBOARD CLOSE MODAL
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
 </body>
-
 </html>
